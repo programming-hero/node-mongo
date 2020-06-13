@@ -32,15 +32,15 @@ app.get('/users/:id', (req, res) =>{
 //post
 app.post('/addProduct', (req, res) => {
     const product = req.body;
-    console.log(product);
+    console.log('Testing', product);
 
     client.connect(err => {
         const collection = client.db("onlineStore").collection("products");
         collection.insertOne(product, (err, res)=>{
             console.log('Successfully inserted', res)
+            client.close();
             // res.send(product);
         });
-        client.close();
       });
 });
 app.listen(4000, () => console.log('Listening to port 4000'));
