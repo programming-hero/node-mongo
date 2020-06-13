@@ -12,7 +12,6 @@ const dbUser = 'dbUser';
 const pass = 'EgM64zuLTAwVgJcF';
 const uri = "mongodb+srv://dbUser:EgM64zuLTAwVgJcF@cluster0-ilfiw.mongodb.net/onlineStore?retryWrites=true&w=majority";
 
-const client = new MongoClient(uri, { useNewUrlParser: true });
 const users = ['Asad', 'Moin', 'Sabed', 'Susmita', 'Sohana', 'Sabana'];
 
 app.get('/', (req, res) =>{
@@ -33,12 +32,12 @@ app.get('/users/:id', (req, res) =>{
 app.post('/addProduct', (req, res) => {
     const product = req.body;
     console.log('Testing', product);
-
+    const client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
         const collection = client.db("onlineStore").collection("products");
-        collection.insertOne(product, (err, res)=>{
+        collection.insertOne(product, (err, document)=>{
             console.log('Successfully inserted', res)
-            // res.send(product);
+            res.send(product);
         });
         client.close();
       });
